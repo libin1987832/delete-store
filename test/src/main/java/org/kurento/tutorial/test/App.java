@@ -69,6 +69,9 @@ public class App
 		MongoCollection<Document> table = db.getCollection(System.getProperty("mongo.dbCollection",MONGO_DB_COLLECTION));
 		FindIterable<Document> findIterable = table.find();
 		for(Document doc:findIterable){
+			String str=doc.getString("endTime");
+			if("0".equals(str))
+				continue;
 			Date time = doc.getDate("endTime");
 			long diff = (new Date()).getTime() - time.getTime();
 			if(diff>1000 * second){
